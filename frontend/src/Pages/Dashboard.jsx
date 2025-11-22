@@ -1,5 +1,4 @@
 import React from "react";
-import { CircularProgress } from "@heroui/progress";
 import CircularProgressBar from "../components/CircularProgressBar";
 
 const Dashboard = () => {
