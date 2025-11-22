@@ -1,10 +1,39 @@
-import React from "react";
-import CircularProgressBar from "../components/CircularProgressBar";
+import React, { useState } from "react";
+import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/Button";
+import { clamp } from "../lib/utils";
+import CalorieEntriesTable from "../components/CalorieEntriesTable";
+import { Separator } from "@/components/ui/separator";
 
 const Dashboard = () => {
+  const [caloriesConsumed, setCaloriesConsumed] = useState(1000);
+  const [goalCalories, setGoalCalories] = useState(2000);
+  const caloriesLeft = goalCalories - caloriesConsumed;
+  const caloriesConsumedPercentage = clamp(
+    (caloriesConsumed / goalCalories) * 100,
+    0,
+    100
+  );
+
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center">
-      <CircularProgressBar value={25} max={100} size={140} strokeWidth={12} />
+      <div className="w-full max-w-md">
+        <h1 className="text-8xl text-foreground text-center mb-4">
+          {caloriesLeft}
+          <span className="text-5xl text-muted-foreground"> left</span>
+        </h1>
+
+        <Progress
+          value={caloriesConsumedPercentage}
+          indicatorprops={
+            caloriesConsumed > goalCalories ? "bg-red-500" : "bg-green-500"
+          }
+        />
+
+        <Separator orientation="horizontal" className="my-25" />
+
+        <CalorieEntriesTable />
+      </div>
     </div>
   );
 };
