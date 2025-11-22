@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { clamp } from "../lib/utils";
 import CalorieEntriesTable from "../components/CalorieEntriesTable";
 import { Separator } from "@/components/ui/separator";
+import { Plus } from "lucide-react";
 
 const Dashboard = () => {
   const [caloriesConsumed, setCaloriesConsumed] = useState(1000);
@@ -17,21 +18,24 @@ const Dashboard = () => {
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center">
-      <div className="w-full max-w-md">
-        <h1 className="text-8xl text-foreground text-center mb-4">
-          {caloriesLeft}
-          <span className="text-5xl text-muted-foreground"> left</span>
-        </h1>
+      <div className="w-full max-w-md flex flex-col gap-15">
+        <div className="flex flex-col gap-4">
+          <h1 className="text-8xl text-foreground text-center">
+            {caloriesLeft}
+            <span className="text-5xl text-muted-foreground"> left</span>
+          </h1>
+          <Progress
+            value={caloriesConsumedPercentage}
+            indicatorprops={
+              caloriesConsumed > goalCalories ? "bg-red-500" : "bg-green-500"
+            }
+          />
+          <Button className="w-full">
+            <Plus />
+          </Button>
+        </div>
 
-        <Progress
-          value={caloriesConsumedPercentage}
-          indicatorprops={
-            caloriesConsumed > goalCalories ? "bg-red-500" : "bg-green-500"
-          }
-        />
-
-        <Separator orientation="horizontal" className="my-25" />
-
+        <Separator />
         <CalorieEntriesTable />
       </div>
     </div>
