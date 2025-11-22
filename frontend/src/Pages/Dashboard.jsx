@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Progress } from "@/components/ui/progress";
-import { Button } from "@/components/ui/Button";
 import { clamp } from "../lib/utils";
 import CalorieEntriesTable from "../components/CalorieEntriesTable";
 import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
+import CalorieEntry from "../components/CalorieEntry";
 
 const Dashboard = () => {
-  const [caloriesConsumed, setCaloriesConsumed] = useState(1000);
-  const [goalCalories, setGoalCalories] = useState(2000);
+  const [caloriesConsumed, _setCaloriesConsumed] = useState(1000);
+  const [goalCalories, _setGoalCalories] = useState(2000);
   const caloriesLeft = goalCalories - caloriesConsumed;
   const caloriesConsumedPercentage = clamp(
     (caloriesConsumed / goalCalories) * 100,
@@ -30,9 +30,7 @@ const Dashboard = () => {
               caloriesConsumed > goalCalories ? "bg-red-500" : "bg-green-500"
             }
           />
-          <Button className="w-full">
-            <Plus />
-          </Button>
+          <CalorieEntry />
         </div>
 
         <Separator />
