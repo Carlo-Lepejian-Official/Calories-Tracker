@@ -3,12 +3,13 @@ import { Progress } from "@/components/ui/progress";
 import { clamp } from "../lib/utils";
 import CalorieEntriesTable from "../components/CalorieEntriesTable";
 import { Separator } from "@/components/ui/separator";
-import { Plus } from "lucide-react";
+import { Edit, Plus } from "lucide-react";
 import CalorieEntry from "../components/CalorieEntry";
+import EditDailyCalories from "../components/EditDailyCalories";
 
 const Dashboard = () => {
   const [caloriesConsumed, _setCaloriesConsumed] = useState(1000);
-  const [goalCalories, _setGoalCalories] = useState(2000);
+  const [goalCalories, setGoalCalories] = useState(2000);
   const caloriesLeft = goalCalories - caloriesConsumed;
   const caloriesConsumedPercentage = clamp(
     (caloriesConsumed / goalCalories) * 100,
@@ -30,7 +31,13 @@ const Dashboard = () => {
               caloriesConsumed > goalCalories ? "bg-red-500" : "bg-green-500"
             }
           />
-          <CalorieEntry />
+          <div className="flex flex-row items-center justify-center gap-5">
+            <EditDailyCalories
+              goalCalories={goalCalories}
+              setGoalCalories={setGoalCalories}
+            />
+            <CalorieEntry triggerClassName="flex-1" />
+          </div>
         </div>
 
         <Separator />

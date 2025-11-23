@@ -7,18 +7,19 @@ import { Button } from "@/components/ui/Button";
 import { Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
-const CalorieEntry = () => {
+const CalorieEntry = ({ triggerClassName }) => {
   return (
     <Popover>
-      <PopoverTrigger>
+      <PopoverTrigger className={triggerClassName}>
         <Button className="w-full">
-          <Plus></Plus>
+          <Plus />
+          Add Entry
         </Button>
       </PopoverTrigger>
       <PopoverContent>
         <div className="flex flex-col gap-2">
           <Input type="number" min={1} className="text-center"></Input>
-          <Button>Submit</Button>
+          <Button>Add</Button>
         </div>
       </PopoverContent>
     </Popover>
