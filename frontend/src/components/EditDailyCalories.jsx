@@ -22,7 +22,7 @@ const EditDailyCalories = ({ goalCalories }) => {
 
   return (
     <Drawer>
-      <DrawerTrigger>
+      <DrawerTrigger asChild>
         <Button
           onClick={() => {
             setCalories(goalCalories);

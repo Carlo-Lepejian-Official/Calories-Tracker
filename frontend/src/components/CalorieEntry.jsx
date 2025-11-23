@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 const CalorieEntry = ({ triggerClassName }) => {
   return (
     <Popover>
-      <PopoverTrigger className={triggerClassName}>
+      <PopoverTrigger className={triggerClassName} asChild>
         <Button className="w-full">
           <Plus />
           Add Entry

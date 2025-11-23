@@ -23,13 +23,13 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 
-const CalorieEntriesTable = () => {
+const CalorieEntriesTable = ({ calorieEntries }) => {
   const handleEdit = (e) => {};
 
   const editButton = () => {
     return (
       <Dialog>
-        <DialogTrigger>
+        <DialogTrigger asChild>
           <Button size="sm" variant="ghost">
             <Edit />
           </Button>
@@ -55,7 +55,7 @@ const CalorieEntriesTable = () => {
   const deleteButton = () => {
     return (
       <Dialog>
-        <DialogTrigger>
+        <DialogTrigger asChild>
           <Button size="sm" variant="ghost">
             <Trash className="text-red-800" />
           </Button>
@@ -77,11 +77,11 @@ const CalorieEntriesTable = () => {
     );
   };
 
-  const calorieEntryRow = () => {
+  const calorieEntryRow = (calorieEntry) => {
     return (
-      <TableRow className="group">
-        <TableCell className="text-center">9:00 AM</TableCell>
-        <TableCell className="text-center">200</TableCell>
+      <TableRow className="group" key={calorieEntry.Id}>
+        <TableCell className="text-center">{calorieEntry.Date}</TableCell>
+        <TableCell className="text-center">{calorieEntry.Calories}</TableCell>
         <TableCell
           align="right"
           className="opacity-0 group-hover:opacity-100 transition-opacity"
@@ -102,7 +102,9 @@ const CalorieEntriesTable = () => {
           <TableHead className="w-1"></TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>{calorieEntryRow()}</TableBody>
+      <TableBody>
+        {calorieEntries.map((calorieEntry) => calorieEntryRow(calorieEntry))}
+      </TableBody>
       <TableFooter>
         <TableRow>
           <TableCell className="text-center font-bold">Total</TableCell>

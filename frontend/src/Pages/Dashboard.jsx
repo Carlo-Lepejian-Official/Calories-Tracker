@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { clamp } from "../lib/utils";
 import CalorieEntriesTable from "../components/CalorieEntriesTable";
@@ -16,6 +16,23 @@ const Dashboard = () => {
     0,
     100
   );
+  const calorieEntries = [
+    {
+      Id: 1,
+      Date: 1763879627,
+      Calories: 200,
+    },
+    {
+      Id: 2,
+      Date: 1763879629,
+      Calories: 250,
+    },
+    {
+      Id: 3,
+      Date: 1763879635,
+      Calories: 500,
+    },
+  ];
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center">
@@ -41,7 +58,7 @@ const Dashboard = () => {
         </div>
 
         <Separator />
-        <CalorieEntriesTable />
+        <CalorieEntriesTable calorieEntries={calorieEntries} />
       </div>
     </div>
   );
