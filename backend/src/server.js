@@ -1,9 +1,24 @@
-const express = require("express");
+import express from "express";
+import {
+  clerkClient,
+  clerkMiddleware,
+  getAuth,
+  requireAuth,
+} from "@clerk/express";
+import "dotenv/config";
+
 const app = express();
 const PORT = 3000;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.get("/api", requireAuth(), async (req, res) => {
+  const { userId } = getAuth(req);
+
+  const user = await clerkClient.users.getUser(userId);
+
+  console.log(user);
+  res.send("You are authenticated!!");
 });
 
-app.listen(PORT);
+app.listen(PORT, () => {
+  console.log(`Example app listening at http://localhost:${PORT}`);
+});
