@@ -1,6 +1,4 @@
-import React from "react";
-
-import LoginCard from "../components/LoginCard";
+import { SignIn } from "@clerk/clerk-react";
 
 const Login = () => {
   return (
@@ -16,7 +14,7 @@ const Login = () => {
 
       {/* Login */}
       <div className="h-screen flex flex-col justify-center items-center text-primary flex-1">
-        <LoginCard />
+        <SignIn />
       </div>
     </div>
   );

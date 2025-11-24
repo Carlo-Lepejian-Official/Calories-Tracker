@@ -35,7 +35,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-center">
+    <div className="w-full h-full flex flex-col items-center justify-center">
       <div className="w-full max-w-md flex flex-col gap-15">
         <div className="flex flex-col gap-4">
           <h1 className="text-8xl text-foreground text-center">
