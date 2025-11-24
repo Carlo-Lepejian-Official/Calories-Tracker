@@ -11,13 +11,7 @@ import "dotenv/config";
 const app = express();
 const PORT = 3000;
 
-try {
-  await mongoose.connect(process.env.MONGODB_URI);
-  console.log("Connected to Database!");
-} catch (error) {
-  console.error("Error while connecting to database: ", error);
-  process.exit(1);
-}
+mongoose.connect(process.env.MONGODB_URI);
 
 app.get("/api", requireAuth(), async (req, res) => {
   const { userId } = getAuth(req);
