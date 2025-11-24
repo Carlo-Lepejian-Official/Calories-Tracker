@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { clamp } from "../lib/utils";
 import CalorieEntriesTable from "../components/CalorieEntriesTable";
 import { Separator } from "@/components/ui/separator";
-import { Edit, Plus } from "lucide-react";
 import CalorieEntry from "../components/CalorieEntry";
 import EditDailyCalories from "../components/EditDailyCalories";
 

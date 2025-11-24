@@ -1,12 +1,6 @@
 import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
-import {
-  SignedIn,
-  SignedOut,
-  SignOutButton,
-  UserAvatar,
-  UserButton,
-} from "@clerk/clerk-react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 
 function App() {
   return (

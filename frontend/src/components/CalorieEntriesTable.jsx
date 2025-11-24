@@ -1,21 +1,18 @@
-import React from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Delete, Edit, Plus, Trash } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -24,7 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 const CalorieEntriesTable = ({ calorieEntries }) => {
-  const handleEdit = (e) => {};
+  const _handleEdit = () => {};
 
   const editButton = () => {
     return (
