@@ -10,8 +10,27 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useState } from "react";
+import { useAuth } from "@clerk/clerk-react";
+import api from "../lib/api";
 
 const CalorieEntry = ({ triggerClassName }) => {
+  const { getToken } = useAuth();
+  const [entryValue, setEntryValue] = useState(1);
+
+  const handleAddEntry = async () => {
+    const token = await getToken();
+    api.post(
+      "/calorie-entries",
+      {
+        calories: entryValue,
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+  };
+
   return (
     <Dialog>
       <DialogTrigger className={triggerClassName} asChild>
@@ -30,14 +49,17 @@ const CalorieEntry = ({ triggerClassName }) => {
           min={1}
           max={10000}
           className="text-center"
+          onChange={(e) => setEntryValue(e.target.value)}
         ></Input>
 
         <DialogFooter>
-          <DialogClose>
+          <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
           </DialogClose>
-          <DialogClose>
-            <Button type="submit">Add</Button>
+          <DialogClose asChild>
+            <Button type="submit" onClick={handleAddEntry}>
+              Add
+            </Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
