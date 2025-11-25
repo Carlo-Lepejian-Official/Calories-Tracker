@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Progress } from "@/components/ui/progress";
-import { clamp } from "../lib/utils";
 import CalorieEntriesTable from "../components/CalorieEntriesTable";
 import { Separator } from "@/components/ui/separator";
 import CalorieEntry from "../components/CalorieEntry";

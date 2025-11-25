@@ -86,9 +86,11 @@ const EditDailyCalories = ({ dailyCalories, setDailyCalories }) => {
 
         <DrawerFooter>
           <div className="flex flex-col items-center justify-center gap-2">
-            <Button className="w-xl" onClick={trySetDailyCalories}>
-              Submit
-            </Button>
+            <DrawerClose asChild>
+              <Button className="w-xl" onClick={trySetDailyCalories}>
+                Submit
+              </Button>
+            </DrawerClose>
             <DrawerClose asChild>
               <Button className="w-xl" variant="outline">
                 Cancel
