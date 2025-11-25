@@ -14,6 +14,7 @@ router.use(async (req, res, next) => {
 
   try {
     await User.findOneAndUpdate({ userId }, {}, { upsert: true });
+    req.userId = userId;
     next();
   } catch (error) {
     console.error("Failed at ensuring user exists: ", error);
