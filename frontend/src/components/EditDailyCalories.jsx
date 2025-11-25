@@ -42,6 +42,7 @@ const EditDailyCalories = ({ dailyCalories, setDailyCalories }) => {
       }
     } catch (error) {
       console.error("Couldn't update daily calories. ", error);
+      toast.error("Unexpected Error Occured.");
     }
   };
 
