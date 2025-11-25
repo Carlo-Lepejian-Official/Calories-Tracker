@@ -17,6 +17,7 @@ const PORT = 3000;
 mongoose.connect(process.env.MONGODB_URI);
 
 app.use(cors());
+app.use(express.json());
 app.use("/api", requireAuth(), ensureUserExists, apiRoutes);
 
 app.listen(PORT, () => {

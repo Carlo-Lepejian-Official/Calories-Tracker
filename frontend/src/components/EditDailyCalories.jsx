@@ -12,12 +12,35 @@ import {
 import { Button } from "@/components/ui/Button";
 import { Edit, Minus, Plus } from "lucide-react";
 import { clamp } from "../lib/utils";
+import { useAuth } from "@clerk/clerk-react";
+import api from "../lib/api";
 
-const EditDailyCalories = ({ goalCalories }) => {
-  const [calories, setCalories] = useState(goalCalories);
+const EditDailyCalories = ({ dailyCalories, setDailyCalories }) => {
+  const { getToken } = useAuth();
+  const [calories, setCalories] = useState(dailyCalories);
 
   const changeCalories = (changeBy) => {
     setCalories(clamp(calories + changeBy, 100, 10000));
+  };
+
+  const trySetDailyCalories = async () => {
+    try {
+      const token = await getToken();
+      const res = await api.post(
+        "/daily-calories",
+        {
+          dailyCalories: calories,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (res.data) {
+        setDailyCalories(res.data);
+      }
+    } catch (error) {
+      console.error("Couldn't update daily calories. ", error);
+    }
   };
 
   return (
@@ -25,7 +48,7 @@ const EditDailyCalories = ({ goalCalories }) => {
       <DrawerTrigger asChild>
         <Button
           onClick={() => {
-            setCalories(goalCalories);
+            setCalories(dailyCalories);
           }}
         >
           <Edit />
@@ -63,8 +86,10 @@ const EditDailyCalories = ({ goalCalories }) => {
 
         <DrawerFooter>
           <div className="flex flex-col items-center justify-center gap-2">
-            <Button className="w-xl">Submit</Button>
-            <DrawerClose>
+            <Button className="w-xl" onClick={trySetDailyCalories}>
+              Submit
+            </Button>
+            <DrawerClose asChild>
               <Button className="w-xl" variant="outline">
                 Cancel
               </Button>

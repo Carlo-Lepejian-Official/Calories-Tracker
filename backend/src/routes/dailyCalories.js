@@ -10,4 +10,12 @@ router.get("/", async (req, res) => {
   return res.send(user.dailyCalories);
 });
 
+router.post("/", async (req, res) => {
+  // Find the user in the MongoDB database
+  const user = await User.findOne({ userId: req.userId });
+  user.dailyCalories = req.body.dailyCalories;
+  user.save();
+  return res.send(user.dailyCalories);
+});
+
 export default router;
