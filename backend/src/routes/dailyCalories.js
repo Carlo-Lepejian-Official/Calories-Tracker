@@ -1,4 +1,4 @@
-import { clerkClient, getAuth } from "@clerk/express";
+import { getAuth } from "@clerk/express";
 import express from "express";
 import User from "../schemas/User.js";
 
@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
 
   // Find the user in the MongoDB database
   const user = await User.findOne({ userId });
-  return res.send("Entries:");
+  return res.send(user.dailyCalories);
 });
 
 export default router;
