@@ -13,6 +13,7 @@ import {
 import { useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import api from "../lib/api";
+import { toast } from "sonner";
 
 const CalorieEntry = ({ triggerClassName }) => {
   const { getToken } = useAuth();
@@ -20,15 +21,23 @@ const CalorieEntry = ({ triggerClassName }) => {
 
   const handleAddEntry = async () => {
     const token = await getToken();
-    api.post(
-      "/calorie-entries",
-      {
-        calories: entryValue,
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+    api
+      .post(
+        "/calorie-entries",
+        {
+          calories: entryValue,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("Added entry!");
+        } else {
+          toast.error("Failed to add entry.");
+        }
+      });
   };
 
   return (
