@@ -1,10 +1,12 @@
 import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { Toaster } from "@/components/ui/sonner";
 
 function App() {
   return (
     <div className="w-full h-screen bg-background dark font-fredoka flex flex-col">
+      <Toaster position="top-center" />
       <SignedOut>
         <Login />
       </SignedOut>

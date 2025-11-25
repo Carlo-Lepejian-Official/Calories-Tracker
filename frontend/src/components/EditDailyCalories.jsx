@@ -14,6 +14,7 @@ import { Edit, Minus, Plus } from "lucide-react";
 import { clamp } from "../lib/utils";
 import { useAuth } from "@clerk/clerk-react";
 import api from "../lib/api";
+import { toast } from "sonner";
 
 const EditDailyCalories = ({ dailyCalories, setDailyCalories }) => {
   const { getToken } = useAuth();
@@ -37,6 +38,7 @@ const EditDailyCalories = ({ dailyCalories, setDailyCalories }) => {
       );
       if (res.data) {
         setDailyCalories(res.data);
+        toast.success("Updated Daily Calories!");
       }
     } catch (error) {
       console.error("Couldn't update daily calories. ", error);
