@@ -19,10 +19,21 @@ initializeApp({
 
 mongoose.connect(process.env.MONGODB_URI);
 
-app.use(cors());
+if (process.env.NODE_ENV !== "production") {
+  app.use(cors());
+}
+
 app.use(express.json());
 
 app.use("/api", validateUser, apiRoutes);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("../../frontend/dist"));
+
+  app.use("/*path", (req, res) => {
+    res.sendFile("../../frontend/dist/index.html");
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);
