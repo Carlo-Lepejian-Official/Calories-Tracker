@@ -76,9 +76,14 @@ const CalorieEntriesTable = ({ calorieEntries }) => {
 
   const calorieEntryRow = (calorieEntry) => {
     return (
-      <TableRow className="group" key={calorieEntry.Id}>
-        <TableCell className="text-center">{calorieEntry.Date}</TableCell>
-        <TableCell className="text-center">{calorieEntry.Calories}</TableCell>
+      <TableRow className="group" key={calorieEntry._id}>
+        <TableCell className="text-center">
+          {new Date(calorieEntry.createdAt).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </TableCell>
+        <TableCell className="text-center">{calorieEntry.calories}</TableCell>
         <TableCell
           align="right"
           className="opacity-0 group-hover:opacity-100 transition-opacity"

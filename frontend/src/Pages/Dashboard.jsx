@@ -6,26 +6,11 @@ import CalorieEntry from "../components/CalorieEntry";
 import EditDailyCalories from "../components/EditDailyCalories";
 import api from "../lib/api.js";
 import { auth } from "../lib/firebase.js";
+import { toast } from "sonner";
 
 const Dashboard = () => {
   const [dailyCalories, setDailyCalories] = useState(2000);
-  const calorieEntries = [
-    {
-      Id: 1,
-      Date: 1763879627,
-      Calories: 200,
-    },
-    {
-      Id: 2,
-      Date: 1763879629,
-      Calories: 250,
-    },
-    {
-      Id: 3,
-      Date: 1763879635,
-      Calories: 500,
-    },
-  ];
+  const [calorieEntries, setCalorieEntries] = useState([]);
 
   useEffect(() => {
     const updateDailyCalories = async () => {
@@ -38,7 +23,24 @@ const Dashboard = () => {
 
       setDailyCalories(res.data);
     };
+
+    const updateCalorieEntries = async () => {
+      const token = await auth.currentUser.getIdToken();
+      const res = await api.get("http://localhost:3000/api/calorie-entries", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.status === 200) {
+        setCalorieEntries(res.data.calorieEntries);
+      } else {
+        toast.error("Error while fetching entries.");
+      }
+    };
+
     updateDailyCalories();
+    updateCalorieEntries();
   }, []);
 
   return (
@@ -58,7 +60,10 @@ const Dashboard = () => {
               dailyCalories={dailyCalories}
               setDailyCalories={setDailyCalories}
             />
-            <CalorieEntry triggerClassName="flex-1" />
+            <CalorieEntry
+              triggerClassName="flex-1"
+              setCalorieEntries={setCalorieEntries}
+            />
           </div>
         </div>
 

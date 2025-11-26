@@ -5,7 +5,15 @@ import CalorieEntry from "../schemas/CalorieEntry.js";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  return res.send("Entries:");
+  try {
+    const user = req.user;
+    const calorieEntries = await CalorieEntry.where({
+      userId: user.uid,
+    }).select("calories createdAt");
+    return res.status(200).json({ calorieEntries });
+  } catch (error) {
+    return res.status(401).json({ error: "Couldn't get calorie entries" });
+  }
 });
 
 router.post("/", async (req, res) => {
@@ -19,7 +27,7 @@ router.post("/", async (req, res) => {
     });
 
     newCalorieEntry.save();
-    return res.status(200).json({ message: "Successfully added entry!" });
+    return res.status(200).json({ calorieEntry: newCalorieEntry });
   } catch (error) {
     console.error("Couldn't add entry: ", error);
     return res.status(500).json({ error: "Couldn't add entry" });

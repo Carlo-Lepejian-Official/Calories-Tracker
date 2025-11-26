@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import { auth } from "../lib/firebase";
 import api from "../lib/api";
 
-const CalorieEntry = ({ triggerClassName }) => {
+const CalorieEntry = ({ triggerClassName, setCalorieEntries }) => {
   const [entryValue, setEntryValue] = useState(1);
 
   const handleAddEntry = async () => {
@@ -34,6 +34,7 @@ const CalorieEntry = ({ triggerClassName }) => {
 
     if (res.status === 200) {
       toast.success("Added entry!");
+      setCalorieEntries((old) => old.concat(res.data.calorieEntry));
     } else {
       toast.error("Couldn't add entry. Please try again later.");
     }
