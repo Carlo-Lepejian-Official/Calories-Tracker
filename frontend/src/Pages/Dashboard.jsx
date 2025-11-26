@@ -19,6 +19,10 @@ const Dashboard = () => {
       ),
     [calorieEntries]
   );
+  const consumedCaloriesPercentage = useMemo(
+    () => clamp((consumedCalories / dailyCalories) * 100, 0, 100),
+    [dailyCalories, consumedCalories]
+  );
 
   useEffect(() => {
     const updateDailyCalories = async () => {
@@ -54,12 +58,17 @@ const Dashboard = () => {
       <div className="w-full max-w-md flex flex-col gap-15">
         <div className="flex flex-col gap-4">
           <h1 className="text-8xl text-foreground text-center">
-            {clamp(dailyCalories - consumedCalories, 0, dailyCalories)}
-            <span className="text-5xl text-muted-foreground"> left</span>
+            {Math.abs(dailyCalories - consumedCalories)}
+            <span className="text-5xl text-muted-foreground">
+              {" "}
+              {consumedCalories <= dailyCalories ? "left" : "over"}
+            </span>
           </h1>
           <Progress
-            value={0}
-            indicatorprops={0 > dailyCalories ? "bg-red-500" : "bg-green-500"}
+            value={consumedCaloriesPercentage}
+            indicatorprops={
+              consumedCalories > dailyCalories ? "bg-red-500" : "bg-green-500"
+            }
           />
           <div className="flex flex-row items-center justify-center gap-5">
             <EditDailyCalories
