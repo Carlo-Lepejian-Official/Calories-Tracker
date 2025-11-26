@@ -7,9 +7,16 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const user = req.user;
+    const startDate = new Date(Date.now() - 172_800_000); // Send entries from two days ago
     const calorieEntries = await CalorieEntry.where({
       userId: user.uid,
-    }).select("calories createdAt");
+    })
+      .where({
+        createdAt: {
+          $gte: startDate,
+        },
+      })
+      .select("calories createdAt");
     return res.status(200).json({ calorieEntries });
   } catch (error) {
     return res.status(401).json({ error: "Couldn't get calorie entries" });

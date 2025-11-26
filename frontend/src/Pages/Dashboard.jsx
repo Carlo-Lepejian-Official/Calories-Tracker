@@ -42,7 +42,16 @@ const Dashboard = () => {
       });
 
       if (res.status === 200) {
-        setCalorieEntries(res.data.calorieEntries);
+        const newCalorieEntries = res.data.calorieEntries;
+
+        // Filter the data to only include the entries today locally
+        const filteredCalorieEntries = newCalorieEntries.filter((entry) => {
+          const date = new Date(entry.createdAt);
+          const today = new Date();
+          return date.toLocaleDateString() === today.toLocaleDateString();
+        });
+
+        setCalorieEntries(filteredCalorieEntries);
       } else {
         toast.error("Error while fetching entries.");
       }
