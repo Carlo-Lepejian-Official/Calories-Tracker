@@ -151,25 +151,27 @@ const CalorieEntriesTable = ({
   };
 
   return (
-    <Table className="text-primary">
-      <TableHeader>
-        <TableRow>
-          <TableHead className="text-center font-bold">Time</TableHead>
-          <TableHead className="text-center font-bold">Calories</TableHead>
-          <TableHead className="w-1"></TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {calorieEntries.map((calorieEntry) => calorieEntryRow(calorieEntry))}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell className="text-center font-bold">Total</TableCell>
-          <TableCell className="text-center">{consumedCalories}</TableCell>
-          <TableCell></TableCell>
-        </TableRow>
-      </TableFooter>
-    </Table>
+    <div className="max-h-80 min-h-80 overflow-y-scroll">
+      <Table className="text-primary">
+        <TableHeader>
+          <TableRow>
+            <TableHead className="text-center font-bold">Time</TableHead>
+            <TableHead className="text-center font-bold">Calories</TableHead>
+            <TableHead className="w-1"></TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {calorieEntries.map((calorieEntry) => calorieEntryRow(calorieEntry))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell className="text-center font-bold">Total</TableCell>
+            <TableCell className="text-center">{consumedCalories}</TableCell>
+            <TableCell></TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </div>
   );
 };
 
