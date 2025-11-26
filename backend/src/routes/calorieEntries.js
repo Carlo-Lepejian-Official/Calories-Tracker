@@ -9,12 +9,12 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const userId = req.userId;
+  const user = req.user;
   const calories = req.body.calories;
 
   try {
     const newCalorieEntry = new CalorieEntry({
-      userId,
+      userId: user.uid,
       calories,
     });
 

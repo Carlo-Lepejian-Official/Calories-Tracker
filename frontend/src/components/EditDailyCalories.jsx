@@ -12,12 +12,11 @@ import {
 import { Button } from "@/components/ui/Button";
 import { Edit, Minus, Plus } from "lucide-react";
 import { clamp } from "../lib/utils";
-import { useAuth } from "@clerk/clerk-react";
-import api from "../lib/api";
 import { toast } from "sonner";
+import { auth } from "../lib/firebase";
+import api from "../lib/api";
 
 const EditDailyCalories = ({ dailyCalories, setDailyCalories }) => {
-  const { getToken } = useAuth();
   const [calories, setCalories] = useState(dailyCalories);
 
   const changeCalories = (changeBy) => {
@@ -25,24 +24,24 @@ const EditDailyCalories = ({ dailyCalories, setDailyCalories }) => {
   };
 
   const trySetDailyCalories = async () => {
-    try {
-      const token = await getToken();
-      const res = await api.post(
-        "/daily-calories",
-        {
-          dailyCalories: calories,
+    const token = await auth.currentUser.getIdToken();
+    const res = await api.post(
+      "http://localhost:3000/api/daily-calories",
+      {
+        dailyCalories: calories,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      if (res.data) {
-        setDailyCalories(res.data);
-        toast.success("Updated Daily Calories!");
       }
-    } catch (error) {
-      console.error("Couldn't update daily calories. ", error);
-      toast.error("Unexpected Error Occured.");
+    );
+
+    if (res.status === 200) {
+      setDailyCalories(res.data);
+      toast.success("Changed daily calories!");
+    } else {
+      toast.error("Couldn't change daily calories. Please try again later.");
     }
   };
 

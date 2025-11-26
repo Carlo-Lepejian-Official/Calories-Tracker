@@ -1,15 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import CalorieEntriesTable from "../components/CalorieEntriesTable";
 import { Separator } from "@/components/ui/separator";
 import CalorieEntry from "../components/CalorieEntry";
 import EditDailyCalories from "../components/EditDailyCalories";
-import { useAuth } from "@clerk/clerk-react";
-import { useEffect } from "react";
 import api from "../lib/api.js";
+import { auth } from "../lib/firebase.js";
 
 const Dashboard = () => {
-  const { getToken } = useAuth();
   const [dailyCalories, setDailyCalories] = useState(2000);
   const calorieEntries = [
     {
@@ -30,20 +28,18 @@ const Dashboard = () => {
   ];
 
   useEffect(() => {
-    async function updateDailyCalories() {
-      const token = await getToken();
-      const res = await api.get("/daily-calories", {
-        headers: { Authorization: `Bearer ${token}` },
+    const updateDailyCalories = async () => {
+      const token = await auth.currentUser.getIdToken();
+      const res = await api.get("http://localhost:3000/api/daily-calories", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-      setDailyCalories(res.data);
-    }
 
-    try {
-      updateDailyCalories();
-    } catch (error) {
-      console.error("Couldn't get daily calories. ", error);
-    }
-  }, [getToken]);
+      setDailyCalories(res.data);
+    };
+    updateDailyCalories();
+  }, []);
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">

@@ -1,6 +1,13 @@
 import { SignIn } from "@clerk/clerk-react";
+import { Button } from "@/components/ui/Button";
+import { auth } from "../lib/firebase";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const Login = () => {
+  const handleSignin = () => {
+    signInWithPopup(auth, new GoogleAuthProvider());
+  };
+
   return (
     <div className="w-full min-h-screen flex flex-row">
       {/* Welcome text */}
@@ -14,7 +21,7 @@ const Login = () => {
 
       {/* Login */}
       <div className="h-screen flex flex-col justify-center items-center text-primary flex-1">
-        <SignIn />
+        <Button onClick={handleSignin}>Sign in with Google</Button>
       </div>
     </div>
   );
