@@ -26,12 +26,12 @@ const Dashboard = () => {
 
   useEffect(() => {
     const updateDailyCalories = async () => {
-      const res = await api.get("http://localhost:3000/api/daily-calories");
+      const res = await api.get("/daily-calories");
       setDailyCalories(res.data);
     };
 
     const updateCalorieEntries = async () => {
-      const res = await api.get("http://localhost:3000/api/calorie-entries");
+      const res = await api.get("/calorie-entries");
 
       if (res.status === 200) {
         const newCalorieEntries = res.data.calorieEntries;

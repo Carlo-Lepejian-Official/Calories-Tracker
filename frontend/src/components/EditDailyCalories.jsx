@@ -23,7 +23,7 @@ const EditDailyCalories = ({ dailyCalories, setDailyCalories }) => {
   };
 
   const trySetDailyCalories = async () => {
-    const res = await api.post("http://localhost:3000/api/daily-calories", {
+    const res = await api.post("/daily-calories", {
       dailyCalories: calories,
     });
 

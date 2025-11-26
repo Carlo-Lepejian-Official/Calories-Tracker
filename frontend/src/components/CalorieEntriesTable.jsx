@@ -30,7 +30,7 @@ const CalorieEntriesTable = ({
   const [editEntryValue, setEditEntryValue] = useState(0);
 
   const handleEdit = async (entryId, changeTo) => {
-    const res = await api.post("http://localhost:3000/api/edit-calorie-entry", {
+    const res = await api.post("/edit-calorie-entry", {
       entryId,
       changeTo,
     });
@@ -52,9 +52,7 @@ const CalorieEntriesTable = ({
   };
 
   const handleDelete = async (entryId) => {
-    const res = await api.delete(
-      `http://localhost:3000/api/edit-calorie-entry/${entryId}`
-    );
+    const res = await api.delete(`edit-calorie-entry/${entryId}`);
 
     if (res.status === 200) {
       setCalorieEntries((prev) => prev.filter((entry) => entry._id != entryId));

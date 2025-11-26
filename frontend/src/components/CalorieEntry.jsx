@@ -18,7 +18,7 @@ const CalorieEntry = ({ triggerClassName, setCalorieEntries }) => {
   const [entryValue, setEntryValue] = useState(1);
 
   const handleAddEntry = async () => {
-    const res = await api.post("http://localhost:3000/api/calorie-entries", {
+    const res = await api.post("/calorie-entries", {
       calories: entryValue,
     });
 
