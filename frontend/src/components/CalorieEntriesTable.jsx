@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 
-const CalorieEntriesTable = ({ calorieEntries }) => {
+const CalorieEntriesTable = ({ calorieEntries, consumedCalories }) => {
   const _handleEdit = () => {};
 
   const editButton = () => {
@@ -110,7 +110,7 @@ const CalorieEntriesTable = ({ calorieEntries }) => {
       <TableFooter>
         <TableRow>
           <TableCell className="text-center font-bold">Total</TableCell>
-          <TableCell className="text-center">200</TableCell>
+          <TableCell className="text-center">{consumedCalories}</TableCell>
           <TableCell></TableCell>
         </TableRow>
       </TableFooter>

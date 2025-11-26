@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import CalorieEntriesTable from "../components/CalorieEntriesTable";
 import { Separator } from "@/components/ui/separator";
@@ -11,6 +11,14 @@ import { toast } from "sonner";
 const Dashboard = () => {
   const [dailyCalories, setDailyCalories] = useState(2000);
   const [calorieEntries, setCalorieEntries] = useState([]);
+  const consumedCalories = useMemo(
+    () =>
+      calorieEntries.reduce(
+        (total, calorieEntry) => (total += calorieEntry.calories),
+        0
+      ),
+    [calorieEntries]
+  );
 
   useEffect(() => {
     const updateDailyCalories = async () => {
@@ -68,7 +76,10 @@ const Dashboard = () => {
         </div>
 
         <Separator />
-        <CalorieEntriesTable calorieEntries={calorieEntries} />
+        <CalorieEntriesTable
+          calorieEntries={calorieEntries}
+          consumedCalories={consumedCalories}
+        />
       </div>
     </div>
   );
