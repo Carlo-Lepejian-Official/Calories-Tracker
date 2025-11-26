@@ -51,6 +51,16 @@ const CalorieEntriesTable = ({
     }
   };
 
+  const handleDelete = async (entryId) => {
+    const res = await api.delete(
+      `http://localhost:3000/api/edit-calorie-entry/${entryId}`
+    );
+
+    if (res.status === 200) {
+      setCalorieEntries((prev) => prev.filter((entry) => entry._id != entryId));
+    }
+  };
+
   const editButton = (calorieEntry) => {
     return (
       <Dialog>
@@ -88,7 +98,7 @@ const CalorieEntriesTable = ({
     );
   };
 
-  const deleteButton = () => {
+  const deleteButton = (calorieEntry) => {
     return (
       <Dialog>
         <DialogTrigger asChild>
@@ -101,12 +111,18 @@ const CalorieEntriesTable = ({
             <DialogTitle>Are you sure?</DialogTitle>
           </DialogHeader>
           <DialogFooter>
-            <DialogClose>
+            <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button variant="destructive" type="submit">
-              Yes, delete.
-            </Button>
+            <DialogClose asChild>
+              <Button
+                variant="destructive"
+                type="submit"
+                onClick={() => handleDelete(calorieEntry._id)}
+              >
+                Yes, delete.
+              </Button>
+            </DialogClose>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -128,7 +144,7 @@ const CalorieEntriesTable = ({
           className="opacity-0 group-hover:opacity-100 transition-opacity"
         >
           {editButton(calorieEntry)}
-          {deleteButton()}
+          {deleteButton(calorieEntry)}
         </TableCell>
       </TableRow>
     );
