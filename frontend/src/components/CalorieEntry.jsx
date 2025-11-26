@@ -12,25 +12,15 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import { toast } from "sonner";
-import { auth } from "../lib/firebase";
 import api from "../lib/api";
 
 const CalorieEntry = ({ triggerClassName, setCalorieEntries }) => {
   const [entryValue, setEntryValue] = useState(1);
 
   const handleAddEntry = async () => {
-    const token = await auth.currentUser.getIdToken();
-    const res = await api.post(
-      "http://localhost:3000/api/calorie-entries",
-      {
-        calories: entryValue,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const res = await api.post("http://localhost:3000/api/calorie-entries", {
+      calories: entryValue,
+    });
 
     if (res.status === 200) {
       toast.success("Added entry!");

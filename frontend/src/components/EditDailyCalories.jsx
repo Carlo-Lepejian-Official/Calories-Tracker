@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/Button";
 import { Edit, Minus, Plus } from "lucide-react";
 import { clamp } from "../lib/utils";
 import { toast } from "sonner";
-import { auth } from "../lib/firebase";
 import api from "../lib/api";
 
 const EditDailyCalories = ({ dailyCalories, setDailyCalories }) => {
@@ -24,18 +23,9 @@ const EditDailyCalories = ({ dailyCalories, setDailyCalories }) => {
   };
 
   const trySetDailyCalories = async () => {
-    const token = await auth.currentUser.getIdToken();
-    const res = await api.post(
-      "http://localhost:3000/api/daily-calories",
-      {
-        dailyCalories: calories,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const res = await api.post("http://localhost:3000/api/daily-calories", {
+      dailyCalories: calories,
+    });
 
     if (res.status === 200) {
       setDailyCalories(res.data);

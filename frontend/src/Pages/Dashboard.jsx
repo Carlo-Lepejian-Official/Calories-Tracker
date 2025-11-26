@@ -5,7 +5,6 @@ import { Separator } from "@/components/ui/separator";
 import CalorieEntry from "../components/CalorieEntry";
 import EditDailyCalories from "../components/EditDailyCalories";
 import api from "../lib/api.js";
-import { auth } from "../lib/firebase.js";
 import { toast } from "sonner";
 import { clamp } from "../lib/utils.js";
 
@@ -23,23 +22,12 @@ const Dashboard = () => {
 
   useEffect(() => {
     const updateDailyCalories = async () => {
-      const token = await auth.currentUser.getIdToken();
-      const res = await api.get("http://localhost:3000/api/daily-calories", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+      const res = await api.get("http://localhost:3000/api/daily-calories");
       setDailyCalories(res.data);
     };
 
     const updateCalorieEntries = async () => {
-      const token = await auth.currentUser.getIdToken();
-      const res = await api.get("http://localhost:3000/api/calorie-entries", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await api.get("http://localhost:3000/api/calorie-entries");
 
       if (res.status === 200) {
         const newCalorieEntries = res.data.calorieEntries;
