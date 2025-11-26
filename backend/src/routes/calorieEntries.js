@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
       calories,
     });
 
-    newCalorieEntry.save();
+    await newCalorieEntry.save();
     return res.status(200).json({ calorieEntry: newCalorieEntry });
   } catch (error) {
     console.error("Couldn't add entry: ", error);
