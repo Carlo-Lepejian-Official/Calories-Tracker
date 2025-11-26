@@ -7,6 +7,7 @@ import EditDailyCalories from "../components/EditDailyCalories";
 import api from "../lib/api.js";
 import { auth } from "../lib/firebase.js";
 import { toast } from "sonner";
+import { clamp } from "../lib/utils.js";
 
 const Dashboard = () => {
   const [dailyCalories, setDailyCalories] = useState(2000);
@@ -56,7 +57,7 @@ const Dashboard = () => {
       <div className="w-full max-w-md flex flex-col gap-15">
         <div className="flex flex-col gap-4">
           <h1 className="text-8xl text-foreground text-center">
-            {dailyCalories}
+            {clamp(dailyCalories - consumedCalories, 0, dailyCalories)}
             <span className="text-5xl text-muted-foreground"> left</span>
           </h1>
           <Progress
