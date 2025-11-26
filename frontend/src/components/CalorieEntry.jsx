@@ -11,33 +11,32 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
-import { useAuth } from "@clerk/clerk-react";
-import api from "../lib/api";
 import { toast } from "sonner";
+import { auth } from "../lib/firebase";
+import api from "../lib/api";
 
 const CalorieEntry = ({ triggerClassName }) => {
-  const { getToken } = useAuth();
   const [entryValue, setEntryValue] = useState(1);
 
   const handleAddEntry = async () => {
-    const token = await getToken();
-    api
-      .post(
-        "/calorie-entries",
-        {
-          calories: entryValue,
+    const token = await auth.currentUser.getIdToken();
+    const res = await api.post(
+      "http://localhost:3000/api/calorie-entries",
+      {
+        calories: entryValue,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-      .then((res) => {
-        if (res.status === 200) {
-          toast.success("Added entry!");
-        } else {
-          toast.error("Failed to add entry.");
-        }
-      });
+      }
+    );
+
+    if (res.status === 200) {
+      toast.success("Added entry!");
+    } else {
+      toast.error("Couldn't add entry. Please try again later.");
+    }
   };
 
   return (
