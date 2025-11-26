@@ -1,4 +1,3 @@
-import { getAuth } from "@clerk/express";
 import express from "express";
 import User from "../schemas/User.js";
 

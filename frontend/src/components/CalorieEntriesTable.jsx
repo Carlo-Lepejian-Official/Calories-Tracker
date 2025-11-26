@@ -19,11 +19,39 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import api from "../lib/api.js";
 
-const CalorieEntriesTable = ({ calorieEntries, consumedCalories }) => {
-  const _handleEdit = () => {};
+const CalorieEntriesTable = ({
+  calorieEntries,
+  consumedCalories,
+  setCalorieEntries,
+}) => {
+  const [editEntryValue, setEditEntryValue] = useState(0);
 
-  const editButton = () => {
+  const handleEdit = async (entryId, changeTo) => {
+    const res = await api.post("http://localhost:3000/api/edit-calorie-entry", {
+      entryId,
+      changeTo,
+    });
+
+    if (res.status === 200) {
+      setCalorieEntries((prev) =>
+        prev.map((entry) => {
+          if (entry._id == entryId) {
+            return {
+              ...entry,
+              calories: Number(changeTo),
+            };
+          } else {
+            return entry;
+          }
+        })
+      );
+    }
+  };
+
+  const editButton = (calorieEntry) => {
     return (
       <Dialog>
         <DialogTrigger asChild>
@@ -36,13 +64,24 @@ const CalorieEntriesTable = ({ calorieEntries, consumedCalories }) => {
             <DialogTitle>Edit Entry</DialogTitle>
           </DialogHeader>
 
-          <Input type="number" min={1}></Input>
+          <Input
+            type="number"
+            min={1}
+            onChange={(e) => setEditEntryValue(e.target.value)}
+          ></Input>
 
           <DialogFooter>
-            <DialogClose>
+            <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Save changes</Button>
+            <DialogClose asChild>
+              <Button
+                type="submit"
+                onClick={() => handleEdit(calorieEntry._id, editEntryValue)}
+              >
+                Save changes
+              </Button>
+            </DialogClose>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -88,7 +127,7 @@ const CalorieEntriesTable = ({ calorieEntries, consumedCalories }) => {
           align="right"
           className="opacity-0 group-hover:opacity-100 transition-opacity"
         >
-          {editButton()}
+          {editButton(calorieEntry)}
           {deleteButton()}
         </TableCell>
       </TableRow>

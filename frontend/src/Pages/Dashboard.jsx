@@ -77,6 +77,7 @@ const Dashboard = () => {
         <CalorieEntriesTable
           calorieEntries={calorieEntries}
           consumedCalories={consumedCalories}
+          setCalorieEntries={setCalorieEntries}
         />
       </div>
     </div>
