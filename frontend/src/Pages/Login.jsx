@@ -1,5 +1,5 @@
 import { SignIn } from "@clerk/clerk-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { auth } from "../lib/firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 

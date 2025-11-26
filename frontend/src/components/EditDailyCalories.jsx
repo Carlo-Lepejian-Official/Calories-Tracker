@@ -9,7 +9,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { Edit, Minus, Plus } from "lucide-react";
 import { clamp } from "../lib/utils";
 import { toast } from "sonner";

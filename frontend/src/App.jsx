@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { useEffect, useState } from "react";
 import { auth } from "./lib/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
